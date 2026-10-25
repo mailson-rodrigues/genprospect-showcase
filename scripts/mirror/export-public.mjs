@@ -89,9 +89,12 @@ function main(argv) {
   ];
   if (!existsSync(path.join(out, '.git'))) git(out, ['init', '-b', 'main']);
   git(out, ['add', '-A']);
-  if (!gitText(out, ['status', '--porcelain'])) return console.log('espelho ja esta atualizado.');
-  git(out, [...identity, 'commit', '-m', `Sync from private @ ${sha}`]);
-  console.log(`snapshot commitado em ${out}`);
+  if (gitText(out, ['status', '--porcelain'])) {
+    git(out, [...identity, 'commit', '-m', `Sync from private @ ${sha}`]);
+    console.log(`snapshot commitado em ${out}`);
+  } else {
+    console.log('espelho ja esta atualizado.'); // ainda assim segue para o push: o snapshot pode estar commitado e nunca publicado
+  }
 
   if (argv.includes('--push')) {
     const remote = flag(argv, '--remote');
