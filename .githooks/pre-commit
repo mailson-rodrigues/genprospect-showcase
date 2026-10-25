@@ -1,0 +1,8 @@
+#!/bin/sh
+# Bloqueia commits que contenham segredos ou arquivos proibidos (.env, chaves, logs, dumps).
+ROOT="$(git rev-parse --show-toplevel)"
+if ! node "$ROOT/scripts/security/secret-scan.mjs" --staged; then
+  echo ""
+  echo "commit BLOQUEADO pelo secret-scan. Corrija e tente novamente."
+  exit 1
+fi

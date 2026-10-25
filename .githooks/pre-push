@@ -1,0 +1,18 @@
+#!/bin/sh
+# $1 = nome do remoto, $2 = URL.
+# 1) O repositorio privado nunca empurra para o espelho publico: o espelho e gerado por
+#    scripts/mirror/export-public.mjs (snapshot higienizado, sem historico privado).
+# 2) Varredura completa antes de qualquer push.
+case "$1" in
+  public|mirror|PUBLIC|MIRROR)
+    echo "push para o remoto '$1' BLOQUEADO: use 'npm run mirror:sync' (snapshot higienizado)."
+    exit 1
+    ;;
+esac
+
+ROOT="$(git rev-parse --show-toplevel)"
+if ! node "$ROOT/scripts/security/secret-scan.mjs" --all; then
+  echo ""
+  echo "push BLOQUEADO pelo secret-scan."
+  exit 1
+fi

@@ -1,0 +1,24 @@
+{
+  "_comment": "Lista de PERMISSAO: so o que esta em include sai para o repositorio publico. exclude vence include. rename: arquivo do repo privado -> caminho no espelho. VITRINE MINIMA: nenhum codigo de produto (scripts/mirror/manifest.test.mjs trava isso).",
+  "include": [
+    "docs/showcase/README.md",
+    "docs/showcase/LICENSE",
+    "docs/01-arquitetura.md",
+    "docs/02-seguranca-e-espelho-publico.md",
+    "docs/06-modulos-e-acesso.md",
+    "scripts/security/",
+    "scripts/mirror/",
+    ".githooks/"
+  ],
+  "rename": {
+    "docs/showcase/README.md": "README.md",
+    "docs/showcase/LICENSE": "LICENSE"
+  },
+  "exclude": [
+    "^docs/internal/",
+    "(^|/)seed/private/",
+    "\\.private\\.",
+    "(^|/)\\.env($|\\.(?!example$))",
+    "^scripts/mirror/manifest\\.test\\.mjs$"
+  ]
+}
