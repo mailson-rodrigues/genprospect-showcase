@@ -34,4 +34,11 @@ gh repo create <org>/genprospect-core --private --source . --remote origin
 npm run mirror:dry                       # exporta e escaneia, sem publicar
 ```
 
-O repositório público (`genprospect-showcase`) só deve ser criado depois de definida a licença. O `npm run mirror:sync` grava os snapshots em `../genprospect-showcase` (pasta irmã, repositório Git separado).
+O repositório público (`genprospect-showcase`) é uma **vitrine mínima**: README próprio, aviso de direitos reservados (nenhuma licença concedida), os documentos de arquitetura, segurança e módulos, e as ferramentas de segurança (scanner e exportador). **Nenhum código de produto sai**; `scripts/mirror/manifest.test.mjs` quebra se o manifesto for ampliado sem querer. Ampliar o escopo ou escolher uma licença é decisão do dono do produto. Sincronizar:
+
+```bash
+npm run mirror:dry                                   # exporta e escaneia, sem publicar
+MIRROR_CONFIRM=yes node scripts/mirror/export-public.mjs --commit --push --remote https://github.com/<conta>/genprospect-showcase.git
+```
+
+O snapshot é gravado em `../genprospect-showcase` (pasta irmã, repositório Git separado, um commit por sincronização).
